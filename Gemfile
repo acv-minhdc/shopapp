@@ -8,6 +8,13 @@ gem 'rails', '~> 5.2.0'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
 gem 'devise'
+gem 'enumerize'
+gem 'simple_form'
+gem 'country_select'
+
+gem 'will_paginate', '~> 3.1.0'
+gem 'bootstrap-will_paginate'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
