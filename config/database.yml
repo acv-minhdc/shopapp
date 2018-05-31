@@ -8,7 +8,7 @@ default: &default
   adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  template: template0
+  encoding: utf8
 
 development:
   <<: *default
@@ -23,4 +23,5 @@ test:
 
 production:
   <<: *default
-  database: Shopapp_production
+  database: shopapp_production
+  username: shopapp
