@@ -11,7 +11,9 @@ gem 'devise'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
+gem 'bootstrap', '~> 4.1.1'
 gem 'sass-rails', '~> 5.0'
+gem 'jquery-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -45,7 +47,6 @@ group :development, :test do
   gem 'pry-doc'
   gem 'pry-stack_explorer'
   gem "factory_bot_rails", "~> 4.0"
-  gem 'dotenv-rails'
 end
 
 group :development do
