@@ -45,6 +45,7 @@ group :development, :test do
   gem 'pry-doc'
   gem 'pry-stack_explorer'
   gem "factory_bot_rails", "~> 4.0"
+  gem 'dotenv-rails'
 end
 
 group :development do
