@@ -14,6 +14,12 @@ gem 'country_select'
 
 gem 'slim-rails'
 
+# Get products list by webhoseio
+gem 'webhoseio-ruby'
+
+# Resize image
+gem "mini_magick"
+
 gem 'will_paginate', '~> 3.1.0'
 gem 'bootstrap-will_paginate', '0.0.10'
 # gem 'will_paginate-bootstrap4'
