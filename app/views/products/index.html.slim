@@ -1,0 +1,5 @@
+div.container
+  h2.text-center
+    | Products listing
+  = render 'products_listing', products: @products
+  = link_to 'New product', new_product_path, class: 'btn btn-success'

@@ -23,6 +23,6 @@ class Product < ApplicationRecord
     self.name = name.downcase
   end
 
-  self.per_page = 5
+  self.per_page = 6
 
 end

@@ -13,6 +13,10 @@
 //= require rails-ujs
 //= require activestorage
 //= require jquery3
-//= require popper
-//= require bootstrap
+//= require bootstrap-sprockets
 //= require turbolinks
+
+$(document).ready(function() {
+    $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
+    $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
+});
