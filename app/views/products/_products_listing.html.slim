@@ -1,13 +1,14 @@
 .container
   .well.well-sm
     .btn-group
-      = will_paginate
+      = will_paginate products
   #products.row.list-group
     - products.each do |product|
       .item.col-xs-4.col-lg-4
         .thumbnail
-          = link_to product do
-            = image_tag product.image_url, :size => '400x250'
+          - if !product.image_url.nil?
+            = link_to product do
+              = image_tag product.image_url, :size => '400x250'
           .caption
             h4.group.inner.list-group-item-heading
               = product.name

@@ -37,7 +37,7 @@ class ProductsController < ApplicationController
   def update
     if @product.update(product_params)
       flash[:success] = 'Product was successfully updated.'
-      redirect_to @product
+      redirect_back fallback_location: products_path
     else
       render :edit
     end
@@ -48,7 +48,7 @@ class ProductsController < ApplicationController
   def destroy
     @product.destroy
     flash[:success] = 'Product was successfully destroyed.'
-    redirect_to products_url
+    redirect_back fallback_location: products_path
   end
 
   private

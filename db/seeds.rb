@@ -33,7 +33,7 @@ query_params = {
 output = webhoseio.query('productFilter', query_params)
 
 # Save to database
-random_array = Array.new(1..3)
+random = Random.new
 3.times do
   output['products'].each do |product|
     category = product['categories'].sample
@@ -45,5 +45,5 @@ random_array = Array.new(1..3)
     end
     Product.create!(name: product['name'], description: product['description'], category: c, price: product['price'], image_url: product['images'].try(:first))
   end
-  random_array.sample.times { output = webhoseio.get_next() }
+  random.rand(1..5).times { output = webhoseio.get_next() }
 end
