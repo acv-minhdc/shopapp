@@ -16,8 +16,13 @@ class CartController < ApplicationController
     end
   end
 
-  # Add
-  def add(quantity = 1)
+  # Add product with quantity
+  def add
+    quantity = params[:quantity].try(:to_i) || 1
+    if quantity <= 0
+      flash[:warning] = 'Quantity cant\'t be less than 1'
+      return redirect_to product_path(params[:id])
+    end
     session[:cart] ||= {}
     products = session[:cart][params[:id].to_s]
     # If exists, add new, else create new variable
@@ -29,28 +34,15 @@ class CartController < ApplicationController
     redirect_to cart_index_path
   end
 
-  # Delete
+  # Delete a product with all quantity
   def delete
-    session[:cart] ||= {}
-    products = session[:cart][:products]
-    id = params[:id]
-    all = params[:all]
-
-    # Is ID present?
-    if id.blank?
-      products.delete
-    else
-      if all.blank?
-        products.delete_at(products.index(id) || products.length)
-      else
-        products.delete(params['id'])
-          end
-      end
-
-    # Handle the request
-    respond_to do |format|
-      format.json { render json: cart_session.build_json }
-      format.html { redirect_to cart_index_path }
-    end
+    session[:cart].delete(params[:id].to_s)
+    flash[:success] = 'Delete done'
+    redirect_to cart_index_path
   end
+
+  def empty
+    session[:cart] = {}
+  end
+
 end

@@ -4,10 +4,16 @@ h2.text-center Your Cart
 - else
   table.table
     tr
+      th id
       th Name product
       th Quantity
+      th colspan='1'
     - while !@items.empty? do
       - product, quantity = @items.shift
       tr
+        td = product.id
         td = product.name.capitalize
         td = quantity['quantity']
+        td
+          = link_to cart_delete_path(product.id), method: :delete, data: { confirm: 'Are you sure?' } do
+            span.glyphicon.glyphicon-remove

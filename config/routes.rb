@@ -10,6 +10,6 @@ Rails.application.routes.draw do
 
   get 'cart' => 'cart#index', :as => 'cart_index'
   post 'cart/add/:id' => 'cart#add', :as => 'cart_add'
-  delete 'cart/remove(/:id(/:all))' => 'cart#delete', :as => 'cart_delete'
+  delete 'cart/remove/:id' => 'cart#delete', :as => 'cart_delete'
 
 end
