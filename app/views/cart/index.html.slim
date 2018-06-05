@@ -1,0 +1,13 @@
+h2.text-center Your Cart
+- if @items.nil?
+  h4 Your cart is empty
+- else
+  table.table
+    tr
+      th Name product
+      th Quantity
+    - while !@items.empty? do
+      - product, quantity = @items.shift
+      tr
+        td = product.name.capitalize
+        td = quantity['quantity']
