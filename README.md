@@ -1,24 +1,17 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Blog app
 
-Things you may want to cover:
+URL: **https://acvshop.herokuapp.com/**
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* [x] Database creation: Get data sample from [webhose](https://webhose.io/) instead of amazon
+* [x] Login, logout, sign up
+* [x] Forgot pass
+* [ ] Update user info
+* [x] Products listing (paginate pages)
+* [x] Products listing by category (paginate pages)
+* [x] Detail Product (include add quantity to cart)
+* [ ] Cart (Update & Remove product)
+* [ ] Page shipping info
+* [ ] Check out (Paypal or google checkout)
+* [ ] Detail bill
