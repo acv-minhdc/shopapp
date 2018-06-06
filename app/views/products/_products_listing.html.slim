@@ -1,0 +1,28 @@
+.container
+  .well.well-sm
+    .btn-group
+      = will_paginate products
+  #products.row.list-group
+    - products.each do |product|
+      .item.col-xs-4.col-lg-4
+        .thumbnail
+          - if !product.image_url.nil?
+            = link_to product do
+              = image_tag product.image_url, :size => '400x250'
+          .caption
+            h4.group.inner.list-group-item-heading
+              = product.name
+            p.group.inner.list-group-item-text
+              = product.description.truncate(200)
+            .row
+              .col-xs-12.col-md-3
+                p.lead
+                  | $#{product.price}
+              .col-xs-12.col-md-9
+              ul.list-inline
+                li
+                  = link_to 'Add to Cart', cart_add_path(product), class: 'btn btn-success', method: :post
+                li
+                  = link_to 'Edit', edit_product_path(product), class: "btn btn-warning"
+                li
+                  = link_to 'Delete', product_path(product), method: :delete, class: "btn btn-danger", data: {confirm: "Are you sure?"}

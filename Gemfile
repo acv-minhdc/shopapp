@@ -6,12 +6,29 @@ ruby '2.5.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+gem 'pg'
 gem 'devise'
+gem 'enumerize'
+gem 'simple_form'
+gem 'country_select'
+
+gem 'slim-rails'
+
+# Get products list by webhoseio
+gem 'webhoseio-ruby'
+
+# Resize image & upload to cloudinary
+gem 'carrierwave'
+gem 'cloudinary'
+
+gem 'will_paginate', '~> 3.1.0'
+gem 'bootstrap-will_paginate', '0.0.10'
+# gem 'will_paginate-bootstrap4'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
-gem 'bootstrap', '~> 4.1.1'
+gem 'bootstrap-sass', '~> 3.3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'jquery-rails'
 # Use Uglifier as compressor for JavaScript assets

@@ -1,0 +1,12 @@
+h2.text-center Your Cart
+- if @cart.cart_items.empty?
+  h4 Your cart is empty
+- else
+  table
+    tr
+      th Name product
+      th Quantity
+  - @cart.cart_items.each do |item|
+    tr
+      td = item.product.name.try(:capitalize)
+      td = item.quantity
