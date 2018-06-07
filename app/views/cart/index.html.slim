@@ -8,8 +8,7 @@ h2.text-center Your Cart
       th Name product
       th Quantity
       th colspan='1'
-    - while !@items.empty? do
-      - product, quantity = @items.shift
+    - @items.each do |product, quantity|
       tr
         td = product.id
         td = product.name.capitalize
@@ -17,3 +16,6 @@ h2.text-center Your Cart
         td
           = link_to cart_delete_path(product.id), method: :delete, data: { confirm: 'Are you sure?' } do
             span.glyphicon.glyphicon-remove
+  br
+  = link_to 'Paypal Checkout', checkout_path, method: :post, class: 'btn btn-info btn-lg'
+  hr

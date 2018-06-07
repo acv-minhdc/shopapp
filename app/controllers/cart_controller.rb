@@ -1,18 +1,19 @@
 class CartController < ApplicationController
-  include ApplicationHelper
+  include PayPal::SDK::REST
   # Index
   def index
+    session[:cart] ||= {}
     products = session[:cart]
-    if (products && products != {})
+    if products && products != {}
 
-        #Get products from DB
-        products_array = Product.find(products.keys.map(&:to_s))
-        #Create Qty Array
-        products_new = {}
-        products_array.each{
-            |a| products_new[a] = {'quantity' => products[a.id.to_s]}
-        }
-        @items = products_new
+      # Get products from DB
+      products_array = Product.find(products.keys.map(&:to_s))
+      # Create Qty Array
+      products_new = {}
+      products_array.each do |a|
+        products_new[a] = { 'quantity' => products[a.id.to_s] }
+      end
+      @items = products_new
     end
   end
 
@@ -34,6 +35,48 @@ class CartController < ApplicationController
     redirect_to cart_index_path
   end
 
+  def checkout
+    @items = index
+    items_list = []
+    total = 0
+    @items.each do |product, quantitty|
+      items_list << {
+        name: product.name,
+        sku: product.id.to_s,
+        price: product.price.to_s,
+        currency: 'USD',
+        quantity: quantitty['quantity']
+      }
+      total += product.price * quantitty['quantity']
+    end
+    @payment = Payment.new(
+      intent: 'sale',
+      payer: {
+        payment_method: 'paypal'
+      },
+      redirect_urls: {
+        return_url: execute_payment_url,
+        cancel_url: root_url
+      },
+      transactions: [{
+        item_list: {
+          items: items_list
+        },
+        amount: {
+          total: total.to_s,
+          currency: 'USD'
+        },
+        description: 'This is the payment transaction description from minhacvshop.'
+      }]
+    )
+    if @payment.create
+      redirect_url = @payment.links.find { |link| link.rel == 'approval_url' }
+      redirect_to redirect_url.href
+    else
+      redirect_to root_url, notice: @payment.error
+    end
+  end
+
   # Delete a product with all quantity
   def delete
     session[:cart].delete(params[:id].to_s)
@@ -44,5 +87,4 @@ class CartController < ApplicationController
   def empty
     session[:cart] = {}
   end
-
 end

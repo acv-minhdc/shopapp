@@ -21,6 +21,9 @@ gem 'webhoseio-ruby'
 gem 'carrierwave'
 gem 'cloudinary'
 
+# Paypal checkout
+gem 'paypal-sdk-rest'
+
 gem 'will_paginate', '~> 3.1.0'
 gem 'bootstrap-will_paginate', '0.0.10'
 # gem 'will_paginate-bootstrap4'
