@@ -1,20 +1,21 @@
 class CartController < ApplicationController
   before_action :set_cart
+  after_action :sync_cart, except: [:index, :checkout]
 
   include PayPal::SDK::REST
   # Index
   def index
     products = session[:cart]
-    if products && products != {}
+    if products.present?
 
       # Get products from DB
       products_array = Product.find(products.keys.map(&:to_s))
       # Create Qty Array
-      products_new = {}
+      line_items = {}
       products_array.each do |a|
-        products_new[a] = { 'quantity' => products[a.id.to_s] }
+        products_list[a] = { 'quantity' => products[a.id.to_s] }
       end
-      @items = products_new
+      @items = line_items
     end
   end
 
@@ -91,5 +92,11 @@ class CartController < ApplicationController
   private
     def set_cart
       session[:cart] ||= {}
+    end
+
+    def sync_cart
+      if user_signed_in?
+        current_user.cart.items = JSON(session[:cart])
+      end
     end
 end
