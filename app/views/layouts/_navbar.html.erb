@@ -42,16 +42,19 @@
           <span class="glyphicon glyphicon-shopping-cart"></span>
           <% end %>
         </li>
+        <% if !user_signed_in? %>
+          <li><%= link_to 'Login', new_user_session_path %></li>
+        <% else %>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hi <%= current_user.firstname %><span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
+            <li><a href="#">Your profile</a></li>
+            <li><%= link_to 'Your Profile', edit_user_registration %></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><%= link_to 'Logout', destroy_user_session_path %></li>
           </ul>
         </li>
+        <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
