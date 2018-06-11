@@ -1,8 +1,9 @@
 class CartController < ApplicationController
+  before_action :set_cart
+
   include PayPal::SDK::REST
   # Index
   def index
-    session[:cart] ||= {}
     products = session[:cart]
     if products && products != {}
 
@@ -20,17 +21,16 @@ class CartController < ApplicationController
   # Add product with quantity
   def add
     quantity = params[:quantity].try(:to_i) || 1
-    if quantity <= 0
+    if quantity < 1
       flash[:warning] = 'Quantity cant\'t be less than 1'
-      return redirect_to product_path(params[:id])
+      return redirect_back fallback_location: product_path(params[:id])
     end
-    session[:cart] ||= {}
-    products = session[:cart][params[:id].to_s]
+    products = session[:cart][params[:id]]
     # If exists, add new, else create new variable
     if products && products != {}
-      session[:cart][params[:id].to_s] += quantity
+      session[:cart][params[:id]] += quantity
     else
-      session[:cart][params[:id].to_s] = quantity
+      session[:cart][params[:id]] = quantity
     end
     redirect_to cart_index_path
   end
@@ -87,4 +87,9 @@ class CartController < ApplicationController
   def empty
     session[:cart] = {}
   end
+
+  private
+    def set_cart
+      session[:cart] ||= {}
+    end
 end
