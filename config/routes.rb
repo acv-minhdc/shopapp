@@ -11,6 +11,6 @@ Rails.application.routes.draw do
   get 'cart' => 'cart#index', :as => 'cart_index'
   post 'cart/add/:id' => 'cart#add', :as => 'cart_add'
   delete 'cart/remove/:id' => 'cart#delete', :as => 'cart_delete'
-  get 'cart/checkout/' => 'cart#checkout', :as => 'checkout'
+  post 'cart/checkout/' => 'orders#checkout', :as => 'checkout'
   get 'execute-payment' => 'orders#create', :as => 'execute_payment'
 end
