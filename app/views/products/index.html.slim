@@ -1,5 +1,10 @@
 div.container
   h2.text-center
     | Products listing
-  = render 'products_listing', products: @products
+  .container
+    .well.well-sm
+      .btn-group
+        = will_paginate @products
+    #products.row.list-group
+      = render partial: 'product', collection: @products
   = link_to 'New product', new_product_path, class: 'btn btn-success'
