@@ -1,5 +1,5 @@
 class CartController < ApplicationController
-  before_action :set_cart
+  before_action :init_cart
   after_action :sync_cart, except: [:index, :checkout]
 
   include PayPal::SDK::REST
@@ -15,10 +15,9 @@ class CartController < ApplicationController
       flash[:warning] = 'Quantity cant\'t be less than 1'
       return redirect_back fallback_location: product_path(params[:id])
     end
-    products = session[:cart][params[:id].to_s]
     # If exists, add new, else create new variable
-    if products.present?
-      session[:cart][params[:id].to_s] += quantity
+    if  session[:cart][params[:id]].present?
+      session[:cart][params[:id]] += quantity
     else
       session[:cart][params[:id]] = quantity
     end
@@ -27,7 +26,7 @@ class CartController < ApplicationController
 
   # Delete a product with all quantity
   def delete
-    session[:cart].delete(params[:id].to_s)
+    session[:cart].delete(params[:id])
     flash[:success] = 'Delete done'
     redirect_to cart_index_path
   end
@@ -38,7 +37,7 @@ class CartController < ApplicationController
 
   private
 
-    def set_cart
+    def init_cart
       session[:cart] ||= {}
     end
 
