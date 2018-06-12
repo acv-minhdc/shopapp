@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
-  before_action :addition_parameter_devise, if: :devise_controller?
-  # helper_method :current_cart
+  # before_action :addition_parameter_devise, if: :devise_controller?
+  helper_method :current_cart
+
+  protected
 
   def get_items_cart
     session[:cart] ||= {}
@@ -17,10 +19,19 @@ class ApplicationController < ActionController::Base
     line_items
   end
 
-  protected
-
-  def addition_parameter_devise
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:firstname, :lastname])
+  def merge_to_session_cart
+    items = JSON.parse(current_user.cart.items)
+    session[:cart].merge!(items) { |key, oldval, newval| oldval + newval }
+    current_user.cart.items = JSON(session[:cart])
+    current_user.save!
   end
+
+  def current_cart
+    session[:cart]
+  end
+
+  # def addition_parameter_devise
+  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:firstname, :lastname])
+  # end
 
 end
