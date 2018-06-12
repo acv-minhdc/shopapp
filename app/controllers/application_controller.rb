@@ -20,15 +20,13 @@ class ApplicationController < ActionController::Base
   end
 
   def merge_to_session_cart
+    session[:cart] ||= {}
     items = JSON.parse(current_user.cart.items)
     session[:cart].merge!(items) { |key, oldval, newval| oldval + newval }
     current_user.cart.items = JSON(session[:cart])
-    current_user.save!
+    current_user.cart.save!
   end
 
-  def current_cart
-    session[:cart]
-  end
 
   # def addition_parameter_devise
   #   devise_parameter_sanitizer.permit(:sign_up, keys: [:firstname, :lastname])

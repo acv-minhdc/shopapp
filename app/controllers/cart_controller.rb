@@ -2,7 +2,6 @@ class CartController < ApplicationController
   before_action :init_cart
   after_action :sync_cart, except: [:index, :checkout]
 
-  include PayPal::SDK::REST
   # Index
   def index
     @items = get_items_cart
@@ -43,8 +42,8 @@ class CartController < ApplicationController
 
     def sync_cart
       if user_signed_in?
-        current_user.cart.items = JSON(session[:cart])
-        current_user.save!
+        current_user.cart.items = JSON(session[:cart]) if session[:cart]
+        current_user.cart.save!
       end
     end
 
