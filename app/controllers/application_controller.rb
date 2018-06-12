@@ -23,8 +23,7 @@ class ApplicationController < ActionController::Base
 
   def merge_to_session_cart
     session[:cart] ||= {}
-    items = JSON.parse(current_user.cart.items)
-    session[:cart].merge!(items) { |key, oldval, newval| oldval + newval }
+    session[:cart].merge!(JSON.parse(current_user.cart.items)) { |key, oldval, newval| oldval + newval } if current_user.cart.items.present?
     current_user.cart.items = JSON(session[:cart])
     current_user.cart.save!
   end

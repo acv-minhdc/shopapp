@@ -1,23 +1,20 @@
 h2.text-center Your Cart
-- if @items.nil?
-  h4 Your cart is empty
-- else
-  table.table
-    tr
-      th Product
-      th Name
-      th Quantity
-      th Price
-      th colspan='1'
-    = render partial: "item", collection: @items, as: :item
+table.table
+  tr
+    th Product
+    th Name
+    th Quantity
+    th Price
+    th colspan='1'
+  = render partial: "item", collection: @items, as: :item
 
-  div.text-center
-    h3
-      strong = 'Total: $' + @total_price.to_s
+div.text-center
+  h3
+    strong = 'Total: $' + @total_price.to_s
 
-  br
-  div.text-center
-    = link_to 'Empty Cart', empty_cart_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning btn-lg btn-space'
-    = link_to 'Paypal Checkout', checkout_path, class: 'btn btn-info btn-lg btn-space'
+br
+div.text-center
+  = link_to 'Empty Cart', empty_cart_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning btn-lg btn-space'
+  = link_to 'Paypal Checkout', checkout_path, method: :post, class: 'btn btn-info btn-lg btn-space'
 
-  hr
+hr

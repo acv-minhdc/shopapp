@@ -53,7 +53,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up.
   def after_sign_up_path_for(resource)
-    Cart.create(items: '{}', user_id: current_user.id) if current_user.cart.nil?
+    Cart.create(items: '{}', user_id: current_user.id)
     merge_to_session_cart
     super(resource)
   end
