@@ -7,8 +7,13 @@ h2.text-center Your Cart
       th Product
       th Name
       th Quantity
+      th Price
       th colspan='1'
     = render partial: "item", collection: @items, as: :item
+
+  div.text-center
+    h3
+      strong = 'Total: $' + @total_price.to_s
 
   br
   div.text-center

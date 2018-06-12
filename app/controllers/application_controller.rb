@@ -11,8 +11,11 @@ class ApplicationController < ActionController::Base
       # Get products from DB
       products = Product.find(cart.keys.map(&:to_s))
       # Create quantity array
+      @total_price = 0
       products.each do |a|
-        item_list[a] = { 'quantity' => cart[a.id.to_s] }
+        subprice_of_a_line = cart[a.id.to_s]*a.price
+        @total_price += subprice_of_a_line
+        item_list[a] = { 'quantity' => cart[a.id.to_s], 'subprice' => subprice_of_a_line }
       end
     end
     item_list
