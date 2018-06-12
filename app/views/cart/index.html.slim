@@ -8,12 +8,13 @@ table.table
     th colspan='1'
   = render partial: "item", collection: @items, as: :item
 
-div.text-center
+.text-center
   h3
     strong = 'Total: $' + @total_price.to_s
 
 br
-div.text-center
+
+.text-center
   = link_to 'Empty Cart', empty_cart_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning btn-lg btn-space'
   = link_to 'Paypal Checkout', checkout_path, method: :post, class: 'btn btn-info btn-lg btn-space'
 
