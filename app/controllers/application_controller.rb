@@ -5,18 +5,17 @@ class ApplicationController < ActionController::Base
   protected
 
   def get_items_cart
-    session[:cart] ||= {}
-    products = session[:cart]
-    line_items = {}
-    if products.present?
+    cart = session[:cart]
+    item_list = {}
+    if cart.present?
       # Get products from DB
-      products_array = Product.find(products.keys.map(&:to_s))
-      # Create Qty Array
-      products_array.each do |a|
-        line_items[a] = { 'quantity' => products[a.id.to_s] }
+      products = Product.find(cart.keys.map(&:to_s))
+      # Create quantity array
+      products.each do |a|
+        item_list[a] = { 'quantity' => cart[a.id.to_s] }
       end
     end
-    line_items
+    item_list
   end
 
   def merge_to_session_cart

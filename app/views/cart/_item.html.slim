@@ -1,9 +1,14 @@
 - product = item[0]
 - quantity = item[1]['quantity']
 tr
-  td = product.id
+  td = image_tag product.image_url, :size => "100"
   td = product.name.capitalize
-  td = quantity
+  td
+    = form_tag(controller: 'cart', action: 'change_quantity')
+      = number_field_tag :quantity, quantity, min: 1, step: 1
+      = hidden_field_tag :id, product.id
+      = submit_tag 'Apply'
+
   td
     = link_to cart_delete_path(product.id), method: :delete, data: { confirm: 'Are you sure?' } do
       span.glyphicon.glyphicon-remove

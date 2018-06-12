@@ -1,5 +1,5 @@
 class CartController < ApplicationController
-  before_action :init_cart
+  before_action :init_cart, except: [:empty]
   after_action :sync_cart, except: [:index, :checkout]
 
   # Index
@@ -30,8 +30,18 @@ class CartController < ApplicationController
     redirect_to cart_index_path
   end
 
+  def change_quantity
+    if params[:quanlity].nil? || params[:quantity].to_i < 1
+      flash.now[:warning] = 'Quantity cant\'t be empty or less than 1'
+      # return redirect_back fallback_location: product_path(params[:id])
+    end
+    session[:cart][params[:id]] = params[:quantity].to_i
+  end
+
   def empty
     session[:cart] = {}
+    flash[:success] = 'Empty done'
+    redirect_to cart_index_path
   end
 
   private
