@@ -1,4 +1,4 @@
-class CheckOut
+module OrdersHelper
   include PayPal::SDK::REST
 
   def create_request_payment(items, return_url, cancel_url)
@@ -14,7 +14,7 @@ class CheckOut
       }
       total += product.price * quantitty['quantity']
     end
-    return Payment.new(
+    Payment.new(
       intent: 'sale',
       payer: {
         payment_method: 'paypal'
