@@ -1,0 +1,8 @@
+- product = item[0]
+- quantity = item[1]['quantity']
+- subprice = item[1]['subprice']
+tr
+  td = image_tag product.image_url, :size => "100"
+  td = product.name.capitalize
+  td = quantity
+  td = '$' + subprice.to_s
