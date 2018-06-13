@@ -8,11 +8,17 @@ Rails.application.routes.draw do
 
   get 'index' => 'pages#index'
 
+  # Custom cart/session cart
   get 'cart' => 'cart#index', :as => 'cart_index'
   post 'cart' => 'cart#change_quantity'
   post 'cart/add/:id' => 'cart#add', :as => 'cart_add'
   delete 'cart/remove/:id' => 'cart#delete', :as => 'cart_delete'
   delete 'cart/empty' => 'cart#empty', :as => 'empty_cart'
-  post 'cart/checkout/' => 'orders#checkout', :as => 'checkout'
-  get 'execute-payment' => 'orders#create', :as => 'execute_payment'
+
+  resources :orders, only: [:new, :show] do
+    collection do
+      post 'checkout'
+      get 'execute_payment'
+    end
+  end
 end

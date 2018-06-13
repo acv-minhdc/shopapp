@@ -1,5 +1,5 @@
 module OrdersHelper
-  include PayPal::SDK::REST
+  # include PayPal::SDK::REST
 
   def create_request_payment(items, return_url, cancel_url)
     items_list = []
@@ -14,7 +14,7 @@ module OrdersHelper
       }
       total += product.price * quantitty['quantity']
     end
-    Payment.new(
+    PayPal::SDK::REST::Payment.new(
       intent: 'sale',
       payer: {
         payment_method: 'paypal'
@@ -34,5 +34,23 @@ module OrdersHelper
         description: 'This is the payment transaction description from minhacvshop.'
       }]
     )
+  end
+
+  def convert_item_list_to_order_items(item_list)
+    h = {}
+    item_list.each do |product, hash|
+      h[product.id] = hash
+    end
+    h
+  end
+
+  def get_items_order(items)
+    items = JSON.parse(items)
+    products = Product.find(items.keys.map(&:to_s))
+    items_order = {}
+    products.each do |product|
+      items_order[product] = items[product.id.to_s]
+    end
+    items_order
   end
 end
