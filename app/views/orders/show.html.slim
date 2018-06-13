@@ -1,0 +1,16 @@
+h1.text-center Your detail order
+.container
+  p id: #{@order.id}
+  p Name: #{@order.name}
+  p Phone number: #{@order.phone_number}
+  p Shipping address: #{@order.shipping_address}
+  p Total amount: $#{@order.total_amount}
+  p Status Paymemt: #{@order.pay_status}
+  br
+table.table
+  tr
+    th Product
+    th Name
+    th Quantity
+    th Price
+  = render partial: 'item', collection: @items_order, as: :item
