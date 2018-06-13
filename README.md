@@ -12,6 +12,6 @@ URL: **https://acvshop.herokuapp.com/**
 * [x] Products listing by category (paginate pages)
 * [x] Detail Product (include add quantity to cart)
 * [x] Cart (Update & Remove product)
-* [ ] Page shipping info
+* [x] Page shipping info
 * [x] Check out (Paypal or google checkout)
-* [ ] Detail order
+* [x] Detail order
