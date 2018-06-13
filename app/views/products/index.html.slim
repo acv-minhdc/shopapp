@@ -4,7 +4,7 @@
   .container
     .well.well-sm
       .btn-group
-        = will_paginate @products 
+        = will_paginate @products
     #products.row.list-group
       = render partial: 'product', collection: @products
   = link_to 'New product', new_product_path, class: 'btn btn-success'
