@@ -32,7 +32,4 @@ class Users::SessionsController < Devise::SessionsController
     super(resource)
   end
 
-  # def save_session_cart
-  #   @previous_cart = session[:cart]
-  # end
 end
