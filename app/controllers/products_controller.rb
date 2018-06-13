@@ -7,6 +7,10 @@ class ProductsController < ApplicationController
     @products = Product.published.paginate(page: params[:page]).order(id: :desc)
   end
 
+
+
+  private
+
   # GET /products/1
   # GET /products/1.json
   def show; end
