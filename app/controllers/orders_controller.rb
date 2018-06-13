@@ -5,6 +5,7 @@ class OrdersController < ApplicationController
   end
 
   def checkout
+    return redirect_to cart_index_path, notice: 'Your cart is empty' if session[:cart].empty?
     @payment = create_request_payment(get_items_cart, execute_payment_url, root_url)
     # Request to paypal
     if @payment.create

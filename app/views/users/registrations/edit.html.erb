@@ -10,14 +10,14 @@
 
   <div class="field">
     <%= f.label :firstname %><br />
-    <%= f.email_field :firstname, autocomplete: "firstname" %>
+    <%= f.text_field :firstname, autocomplete: "firstname" %>
   </div>
 
   <div class="field">
     <%= f.label :lastname %><br />
-    <%= f.email_field :lastname, autocomplete: "lastname" %>
+    <%= f.text_field :lastname, autocomplete: "lastname" %>
   </div>
-  
+
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>

@@ -14,7 +14,7 @@
   <strong>Price:</strong>
   <%= @product.price %>
 </p>
-<%= form_tag(controller: 'cart', action: 'add', method: :get) do %>
+<%= form_tag(controller: 'cart', action: 'add') do %>
   <%= label_tag :quantity %>
   <%= number_field_tag :quantity, 1, min: 1, step: 1 %>
   <%= submit_tag 'Add to cart' %>

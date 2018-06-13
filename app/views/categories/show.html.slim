@@ -1,4 +1,10 @@
-div.container
-  h1 Products in category #{@category.name}
+.container
+  h2.text-center
+    | Products in category #{@category.name}
+  .container
+    .well.well-sm
+      .btn-group
+        = will_paginate @products
 
-  = render 'products/products_listing', products: @products
+    #products.row.list-group
+      = render partial: 'products/product', collection: @products
