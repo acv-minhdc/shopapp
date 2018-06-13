@@ -47,3 +47,4 @@ random = Random.new
   end
   random.rand(1..5).times { output = webhoseio.get_next() }
 end
+Admin.create!(email: 'admin@example.com', password: 'password')

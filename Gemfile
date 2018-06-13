@@ -14,6 +14,9 @@ gem 'country_select'
 
 gem 'slim-rails'
 
+# admin pages
+gem 'rails_admin'
+
 # Get products list by webhoseio
 gem 'webhoseio-ruby'
 

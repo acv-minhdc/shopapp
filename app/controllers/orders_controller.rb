@@ -17,7 +17,7 @@ class OrdersController < ApplicationController
     @payment = create_request_payment(item_list, execute_payment_orders_url, root_url)
     # Request to paypal
     if @payment.create
-      @order = Order.new(order_params.merge(user_id: current_user.id, items: JSON(convert_item_list_to_order_items(item_list)),
+      @order = Order.new(order_params.merge(user_id: current_user.try(:id), items: JSON(convert_item_list_to_order_items(item_list)),
                           total_amount: @total_price, payment_id: @payment.id))
       if @order.save
         redirect_url = @payment.links.find { |link| link.rel == 'approval_url' }

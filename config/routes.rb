@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+  devise_for :admins
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root 'products#index'
 
-  resources :products, :categories
-
+  resources :products, only: [:index, :show]
+  resources :categories, only: [:index, :show]
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
