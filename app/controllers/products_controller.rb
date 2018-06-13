@@ -7,6 +7,10 @@ class ProductsController < ApplicationController
     @products = Product.published.paginate(page: params[:page]).order(id: :desc)
   end
 
+
+
+  private
+
   # GET /products/1
   # GET /products/1.json
   def show; end
@@ -50,8 +54,6 @@ class ProductsController < ApplicationController
     flash[:success] = 'Product was successfully destroyed.'
     redirect_back fallback_location: products_path
   end
-
-  private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_product
