@@ -1,8 +1,9 @@
 class OrdersController < ApplicationController
   include OrdersHelper
 
-  before_action :set_order, :find_payment, only: [:execute_payment, :show]
-  before_action :authenticate_user!, only: [:index, :show]
+  before_action :set_order, only: [:execute_payment, :show]
+  before_action :authenticate_user!, only: [:index]
+  before_action :authenticate_any!, only: [:show]
 
   def index
     @orders = Order.where(user: current_user).paginate(page: params[:page]).order(:created_at => :desc)
@@ -36,6 +37,11 @@ class OrdersController < ApplicationController
   end
 
   def execute_payment
+    begin
+      @payment = PayPal::SDK::REST::Payment.find(params[:paymentId])
+    rescue
+      redirect_to root_path, notice: 'Payment not found'
+    end
     if @payment.execute(payer_id: params[:PayerID])
       flash.now[:success] = 'Execute payment successfully'
       @order.pay_status = true
@@ -56,15 +62,16 @@ class OrdersController < ApplicationController
   end
 
   def set_order
+    return @order = Order.find(params[:paymentId]) if admin_signed_in?
     @order = Order.find_by(payment_id: params[:paymentId], user: current_user)
     redirect_to root_path, notice: 'Order payment not found' if @order.nil?
   end
 
-  def find_payment
-    begin
-      @payment = PayPal::SDK::REST::Payment.find(params[:paymentId])
-    rescue
-      redirect_to root_path, notice: 'Payment not found'
+  def authenticate_any!
+    if admin_signed_in?
+        true
+    else
+        authenticate_user!
     end
   end
 

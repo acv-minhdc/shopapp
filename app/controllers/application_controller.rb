@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   # before_action :addition_parameter_devise, if: :devise_controller?
-  helper_method :current_cart
 
   protected
 
