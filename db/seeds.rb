@@ -20,8 +20,8 @@ tables.each do |table|
 end
 
 
-User.create email: 'ogremoon54@gmail.com', firstname: 'minh', lastname: 'dao', password: '123456'
-
+u = User.create email: 'ogremoon54@gmail.com', firstname: 'minh', lastname: 'dao', password: '123456'
+Cart.create(user_id: u, items: '{}', )
 # Get products
 require_relative 'webhoseio'
 
@@ -47,3 +47,4 @@ random = Random.new
   end
   random.rand(1..5).times { output = webhoseio.get_next() }
 end
+Admin.create!(email: 'admin@example.com', password: 'password')
