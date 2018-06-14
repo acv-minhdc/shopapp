@@ -24,5 +24,5 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'orders/:paymentId' => 'orders#show', as: 'order'
+  get 'orders/:paymentId' => 'orders#show', as: 'show_order'
 end

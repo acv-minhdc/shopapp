@@ -1,9 +1,9 @@
 tr
   td
-    = link_to order_path(order.payment_id) do
+    = link_to show_order_path(order.payment_id) do
       = order.id
   td
-    = link_to order_path(order.payment_id) do
+    = link_to show_order_path(order.payment_id) do
       = order.payment_id
   td = order.total_amount
   td = order.created_at

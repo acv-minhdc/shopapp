@@ -2,8 +2,7 @@ class OrdersController < ApplicationController
   include OrdersHelper
 
   before_action :set_order, only: [:execute_payment, :show]
-  before_action :authenticate_user!, only: [:index]
-  before_action :authenticate_any!, only: [:show]
+  before_action :authenticate_user!, only: [:index, :show]
 
   def index
     @orders = Order.where(user: current_user).paginate(page: params[:page]).order(:created_at => :desc)
@@ -62,17 +61,8 @@ class OrdersController < ApplicationController
   end
 
   def set_order
-    return @order = Order.find(params[:paymentId]) if admin_signed_in?
     @order = Order.find_by(payment_id: params[:paymentId], user: current_user)
     redirect_to root_path, notice: 'Order payment not found' if @order.nil?
-  end
-
-  def authenticate_any!
-    if admin_signed_in?
-        true
-    else
-        authenticate_user!
-    end
   end
 
 end
