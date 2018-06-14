@@ -1,6 +1,6 @@
 class CartController < ApplicationController
   before_action :init_cart, except: [:empty]
-  after_action :sync_cart, except: [:index, :checkout]
+  after_action :sync_cart, except: [:index, :checkout, :empty]
 
   # Index
   def index
@@ -40,7 +40,7 @@ class CartController < ApplicationController
   end
 
   def empty
-    session[:cart] = {}
+    empty_cart
     flash[:success] = 'Empty done'
     redirect_to cart_index_path
   end

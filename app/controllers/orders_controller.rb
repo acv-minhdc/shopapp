@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
   end
 
   def new
-    @order = Order.new(name: current_user.try { |u| "#{u.firstname} + #{u.lastname}" }, phone_number: current_user.try(:phone_number),
+    @order = Order.new(name: current_user.try { |u| "#{u.firstname} #{u.lastname}" }, phone_number: current_user.try(:phone_number),
                       shipping_address: current_user.try(:address))
   end
 
@@ -41,6 +41,7 @@ class OrdersController < ApplicationController
       @order.pay_status = true
       @order.save!
       @items_order = get_items_order(@order.items)
+      empty_cart
       render 'show'
     else
       flash[:error] = 'Execute payment fail'

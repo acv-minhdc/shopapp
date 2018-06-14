@@ -28,6 +28,11 @@ class ApplicationController < ActionController::Base
     current_user.cart.save!
   end
 
+  def empty_cart
+    session[:cart] = {}
+    current_user.cart.empty_cart if user_signed_in?
+  end
+
 
   # def addition_parameter_devise
   #   devise_parameter_sanitizer.permit(:sign_up, keys: [:firstname, :lastname])
