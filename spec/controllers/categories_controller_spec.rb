@@ -14,8 +14,8 @@ RSpec.describe CategoriesController, type: :controller do
 
   describe 'get #show' do
     it 'get list products of first category' do
-      get :show, params: { id: categories.first.id }
-      expect(assigns(:products).size).to eq category.products
+      get :show, params: { id: category.id }
+      expect(assigns(:products).count).to eq category.products.count
     end
   end
 
