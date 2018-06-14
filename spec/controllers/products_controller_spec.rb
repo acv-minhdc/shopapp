@@ -25,14 +25,20 @@ require 'rails_helper'
 
 RSpec.describe ProductsController, type: :controller do
 
+let!(:products) { create_list(:product, 3) }
 
-
-  # describe "GET #index" do
+  describe "GET #index" do
+    it 'get list products' do
+      get 'index'
+      expect(assigns(:products).size).to eq products.size
+    end
+  end
   #
-  # end
-  #
-  # describe "GET #show" do
-  #
-  # end
+  describe "GET #show" do
+    it 'show first product' do
+      get 'show', params: { id: products.first.id }
+      expect(assigns(:product).eql?(products.first)).to eq true
+    end
+  end
 
 end
