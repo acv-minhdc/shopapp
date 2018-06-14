@@ -30,7 +30,7 @@ let!(:products) { create_list(:product, 3) }
   describe "GET #index" do
     it 'get list products' do
       get 'index'
-      expect(assigns(:products).size).to eq products.size
+      expect(assigns(:products).count).to eq products.count
     end
   end
   #

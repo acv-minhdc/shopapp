@@ -1,0 +1,9 @@
+h1.text-center Your Order History
+= will_paginate
+table.table
+  tr
+    th id
+    th Paypal paymenId
+    th Total Amount
+    th Time
+  = render partial: 'item_index', collection: @orders, as: :order

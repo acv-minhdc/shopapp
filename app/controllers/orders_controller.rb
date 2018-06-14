@@ -1,13 +1,15 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:execute_payment]
-
   include OrdersHelper
+
+  before_action :set_order, :find_payment, only: [:execute_payment, :show]
+  before_action :authenticate_user!, only: [:index, :show]
+
   def index
-    @orders = Order.all
+    @orders = Order.where(user: current_user).paginate(page: params[:page]).order(:created_at => :desc)
   end
 
   def new
-    @order = Order.new(name: current_user.try(:firstname), phone_number: current_user.try(:phone_number),
+    @order = Order.new(name: current_user.try { |u| "#{u.firstname} + #{u.lastname}" }, phone_number: current_user.try(:phone_number),
                       shipping_address: current_user.try(:address))
   end
 
@@ -20,35 +22,30 @@ class OrdersController < ApplicationController
       @order = Order.new(order_params.merge(user_id: current_user.try(:id), items: JSON(convert_item_list_to_order_items(item_list)),
                           total_amount: @total_price, payment_id: @payment.id))
       if @order.save
-        redirect_url = @payment.links.find { |link| link.rel == 'approval_url' }
-        redirect_to redirect_url.href
+        redirect_to @payment.links[1].href
       else
-        redirect_to root_url, notice: 'Something goes wrong when create order'
+        redirect_to root_url, notice: 'Can\'t leave shipping info blank'
       end
     else
       redirect_to root_url, notice: @payment.error
     end
   end
 
-  def update
-
+  def show
+    @items_order = get_items_order(@order.items)
   end
 
   def execute_payment
-    begin
-      payment = PayPal::SDK::REST::Payment.find(params[:paymentId])
-    rescue
-      redirect_to root_path, notice: 'Payment not found'
-    end
-    if payment.execute(payer_id: params[:PayerID])
+    if @payment.execute(payer_id: params[:PayerID])
       flash.now[:success] = 'Execute payment successfully'
       @order.pay_status = true
       @order.save!
+      @items_order = get_items_order(@order.items)
+      render 'show'
     else
-      flash.now[:error] = 'Execute payment fail'
+      flash[:error] = 'Execute payment fail'
+      redirect_to root_path
     end
-    @items_order = get_items_order(@order.items)
-    render 'show'
   end
 
   private
@@ -58,8 +55,16 @@ class OrdersController < ApplicationController
   end
 
   def set_order
-    @order = Order.find_by(payment_id: params[:paymentId])
+    @order = Order.find_by(payment_id: params[:paymentId], user: current_user)
     redirect_to root_path, notice: 'Order payment not found' if @order.nil?
+  end
+
+  def find_payment
+    begin
+      @payment = PayPal::SDK::REST::Payment.find(params[:paymentId])
+    rescue
+      redirect_to root_path, notice: 'Payment not found'
+    end
   end
 
 end
