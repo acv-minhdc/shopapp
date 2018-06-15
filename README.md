@@ -15,3 +15,5 @@ URL: **https://acvshop.herokuapp.com/**
 * [x] Page shipping info
 * [x] Check out (Paypal or google checkout)
 * [x] Detail order
+* [x] Admin pages
+* [ ] Rspec capybara test 
