@@ -3,8 +3,9 @@
 - subprice = item[1]['subprice']
 tr
   td
-    = link_to product do
-      = image_tag product.image_url, :size => "100"
+    - if !product.image_url.blank?
+      = link_to product do
+        = image_tag product.image_url, :size => "100"
   td
     = link_to product do
       = product.name.capitalize

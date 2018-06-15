@@ -5,7 +5,8 @@
         = image_tag product.image_url, :size => "250x250"
     .caption
       h4.group.inner.list-group-item-heading
-        = product.name
+        = link_to product do
+          = product.name
       p.group.inner.list-group-item-text
         = product.description.truncate(200)
       .row

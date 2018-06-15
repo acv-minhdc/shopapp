@@ -14,7 +14,7 @@ class Product < ApplicationRecord
   end
 
   def lower_case_name
-    self.name = name.downcase
+    self.name.downcase!
   end
 
   self.per_page = 9

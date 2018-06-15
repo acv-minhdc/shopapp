@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
-
-<%= image_tag @product.try(:image_url) %>
+<% if !@product.image_url.blank? %>
+  <%= image_tag @product.image_url %>
+<% end %>
 
 <p>
   <strong>Name:</strong>
