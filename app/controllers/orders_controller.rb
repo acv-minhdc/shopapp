@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:index, :show]
 
   def index
-    @orders = Order.where(user: current_user).paginate(page: params[:page]).order(:created_at => :desc)
+    @orders = Order.where(user: current_user).paginate(page: params[:page]).order(:created_at => :asc)
   end
 
   def new
