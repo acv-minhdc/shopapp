@@ -74,6 +74,7 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem "factory_bot_rails", "~> 4.0"
   gem 'dotenv-rails'
+  gem "database_cleaner"
 end
 
 group :development do
