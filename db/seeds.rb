@@ -22,7 +22,7 @@ tables.each do |table|
 end
 
 
-User.create email: 'ogremoon54@gmail.com', firstname: 'minh', lastname: 'dao', password: '123456'
+User.create email: 'ogremoon54@gmail.com', firstname: 'minh', lastname: 'dao', password: '123456', password_confirmation: '123456', address: 'Thu Duc TPHCM', phone_number: '01654565281'
 # Get products
 require_relative 'webhoseio'
 
@@ -35,7 +35,7 @@ output = webhoseio.query('productFilter', query_params)
 
 # Save to database
 random = Random.new
-3.times do
+10.times do
   output['products'].each do |product|
     category = product['categories'].sample
     c = Category.new(name: category)

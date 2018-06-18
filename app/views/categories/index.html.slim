@@ -1,18 +1,18 @@
 
-h1 Categories
-
-= will_paginate
-table
-  thead
-    tr
-      th Name
-
-  tbody
-    - @categories.each do |category|
+h1.text-center Categories
+.container align="center"
+  = will_paginate
+  table
+    thead
       tr
-        td
-          = link_to category do
-            = category.name
-  tbody
-table
+        th
+
+    tbody
+      - @categories.each do |category|
+        tr
+          td
+            = link_to category, class: 'btn btn-default' do
+              = category.name
+    tbody
+  table
 br

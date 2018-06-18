@@ -1,19 +1,24 @@
-.item.col-xs-4.col-lg-4
-  .thumbnail
-    - if !product.image_url.nil?
-      = link_to product do
-        = image_tag product.image_url, :size => "400x250", class: 'img-size'
-    .caption
-      h4.group.inner.list-group-item-heading
-        = link_to product do
-          = product.name.capitalize
-      p.group.inner.list-group-item-text
-        = product.description.truncate(200)
-      .row
-        .col-xs-12.col-md-3
-          p.lead
-            | $#{product.price}
-        .col-xs-12.col-md-9
-        ul.list-inline
-          li
-            = link_to 'Add to Cart', cart_add_path(product), class: 'btn btn-success', method: :post
+.col-xs-12.col-md-6
+  .prod-info-main.prod-wrap.clearfix
+    .row
+      .col-md-5.col-sm-12.col-xs-12
+        .product-image
+          - if !product.image_url.nil?
+            = link_to product do
+              = image_tag product.image_url, size: "216x292", class: 'img-size'
+
+      .col-md-7.col-sm-12.col-xs-12
+        .product-detail
+          h5.name
+            = link_to product do
+              = product.name.capitalize
+          p.price-container
+            span $#{product.price}
+          span.tag1
+        .description
+          p = product.description.truncate(50)
+        .product-info.smart-form
+          .row
+            .col-md-12
+              = link_to 'Add to Cart', cart_add_path(product), class: 'btn btn-danger', method: :post
+              = link_to 'More info', product, class: 'btn btn-info'
