@@ -8,9 +8,11 @@
 User.destroy_all
 Product.destroy_all
 Category.destroy_all
+Order.destroy_all
+Admin.destroy_all
 
 # Restart increse value for database
-tables = ['users', 'products', 'categories']
+tables = ['users', 'products', 'categories', 'orders', 'admins']
 auto_inc_val = 1
 # For postgres database
 tables.each do |table|
@@ -20,15 +22,14 @@ tables.each do |table|
 end
 
 
-u = User.create email: 'ogremoon54@gmail.com', firstname: 'minh', lastname: 'dao', password: '123456'
-Cart.create(user_id: u, items: '{}', )
+User.create email: 'ogremoon54@gmail.com', firstname: 'minh', lastname: 'dao', password: '123456'
 # Get products
 require_relative 'webhoseio'
 
 webhoseio = Webhoseio.new('4e109559-4123-4c01-9401-a31bea4718d8')
 query_params = {
-  'q': "category:fashion || category:books || category:cell-phones-smartphones || category:cars || category:womens-clothing || category:computers || category:music || category:laptops-netbooks || category:skin-care || category:crafts",
-  'ts': "1525370262537"
+	'q': "language:english country:US (category:phone || category:computers || category:cell-phones-accessories || category:camera || category:laptops-netbooks)",
+	'ts': "1521511574512"
 }
 output = webhoseio.query('productFilter', query_params)
 

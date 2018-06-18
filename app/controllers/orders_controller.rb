@@ -11,6 +11,8 @@ class OrdersController < ApplicationController
   def new
     @order = Order.new(name: current_user.try { |u| "#{u.firstname} #{u.lastname}" }, phone_number: current_user.try(:phone_number),
                       shipping_address: current_user.try(:address))
+    return redirect_to cart_index_path, notice: 'Your cart is empty' if session[:cart].empty?
+    @item_list = get_items_cart
   end
 
   def checkout

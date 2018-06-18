@@ -2,11 +2,11 @@
   .thumbnail
     - if !product.image_url.nil?
       = link_to product do
-        = image_tag product.image_url, :size => "250x250"
+        = image_tag product.image_url, :size => "400x250", class: 'img-size'
     .caption
       h4.group.inner.list-group-item-heading
         = link_to product do
-          = product.name
+          = product.name.capitalize
       p.group.inner.list-group-item-text
         = product.description.truncate(200)
       .row
