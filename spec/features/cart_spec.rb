@@ -34,7 +34,7 @@ RSpec.feature 'cart still be there' do
 
     # when no login
     visit products_url
-    click_on products.first.name
+    click_on products.first.name.capitalize
     click_on 'Add to cart'
 
     # when login comeeback
