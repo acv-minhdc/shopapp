@@ -16,6 +16,7 @@
   br
 
   .text-center
+    = link_to 'Back', :back, class: 'btn btn-info btn-lg btn-space'
     = link_to 'Empty Cart', empty_cart_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning btn-lg btn-space'
     = link_to 'Next', new_order_path, class: 'btn btn-success btn-lg btn-space'
   hr

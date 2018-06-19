@@ -29,7 +29,14 @@ class ApplicationController < ActionController::Base
 
   def empty_cart
     session[:cart] = {}
-    current_user.cart.empty_cart if user_signed_in?
+    sync_cart
+  end
+
+  def sync_cart
+    if user_signed_in?
+      current_user.cart.items = JSON(session[:cart]) if session[:cart]
+      current_user.cart.save!
+    end
   end
 
 

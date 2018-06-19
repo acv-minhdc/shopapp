@@ -1,8 +1,4 @@
 class Cart < ApplicationRecord
-  belongs_to :user, optional: true
+  belongs_to :user
 
-  def empty_cart
-    self.items = '{}'
-    self.save
-  end
 end

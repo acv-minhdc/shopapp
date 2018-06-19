@@ -51,11 +51,4 @@ class CartController < ApplicationController
       session[:cart] ||= {}
     end
 
-    def sync_cart
-      if user_signed_in?
-        current_user.cart.items = JSON(session[:cart]) if session[:cart]
-        current_user.cart.save!
-      end
-    end
-
 end

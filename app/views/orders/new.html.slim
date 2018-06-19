@@ -1,9 +1,9 @@
 .col-md-6.col-md-offset-3
   h1.text-center Shipping info
   = simple_form_for(@order, url: checkout_orders_path, method: :post) do |f|
-    = f.input :name, require: true
-    = f.input :phone_number,require: true
-    = f.input :shipping_address, require: true
+    = f.input :name
+    = f.input :phone_number
+    = f.input :shipping_address
     p
       strong Total Price: $#{@total_price}
     = f.button :submit, 'Paypal Checkout', class: 'btn btn-info btn-lg'
