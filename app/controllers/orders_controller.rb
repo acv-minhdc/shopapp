@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   include OrdersHelper
+  include CartHelper
 
   before_action :set_order, only: [:execute_payment, :show]
   before_action :authenticate_user!, only: [:index, :show]
@@ -34,7 +35,7 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @items_order = get_items_order(@order.items)
+    @items = get_items(@order.items)
   end
 
   def execute_payment
@@ -42,7 +43,7 @@ class OrdersController < ApplicationController
       flash.now[:success] = 'Execute payment successfully'
       @order.pay_status = true
       @order.save!
-      @items_order = get_items_order(@order.items)
+      @items = get_items(@order.items)
       empty_cart
       render 'show'
     else
