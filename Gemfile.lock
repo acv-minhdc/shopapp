@@ -66,6 +66,9 @@ GEM
     bootstrap-will_paginate (0.0.10)
       will_paginate
     builder (3.2.3)
+    bullet (5.7.5)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11.0)
     byebug (10.0.2)
     capybara (3.1.1)
       addressable
@@ -346,6 +349,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.5)
     unicode_utils (1.4.0)
+    uniform_notifier (1.11.0)
     warden (1.2.7)
       rack (>= 1.0)
     web-console (3.6.2)
@@ -372,6 +376,7 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   bootstrap-sass (~> 3.3.7)
   bootstrap-will_paginate (= 0.0.10)
+  bullet
   byebug
   capybara (>= 2.15, < 4.0)
   carrierwave

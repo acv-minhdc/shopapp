@@ -3,14 +3,14 @@ class OrdersController < ApplicationController
 
   before_action :set_order, only: [:execute_payment, :show]
   before_action :authenticate_user!, only: [:index, :show]
+  before_action :set_payment, only: [:execute_payment]
 
   def index
     @orders = Order.where(user: current_user).paginate(page: params[:page]).order(:created_at => :asc)
   end
 
   def new
-    @order = Order.new(name: current_user.try { |u| "#{u.firstname} #{u.lastname}" }, phone_number: current_user.try(:phone_number),
-                      shipping_address: current_user.try(:address))
+    @order = Order.new(user: current_user)
     return redirect_to cart_index_path, notice: 'Your cart is empty' if session[:cart].empty?
     @item_list = get_items_cart
   end
@@ -38,11 +38,6 @@ class OrdersController < ApplicationController
   end
 
   def execute_payment
-    begin
-      @payment = PayPal::SDK::REST::Payment.find(params[:paymentId])
-    rescue
-      redirect_to root_path, notice: 'Payment not found'
-    end
     if @payment.execute(payer_id: params[:PayerID])
       flash.now[:success] = 'Execute payment successfully'
       @order.pay_status = true
@@ -64,7 +59,15 @@ class OrdersController < ApplicationController
 
   def set_order
     @order = Order.find_by(payment_id: params[:paymentId], user: current_user)
-    redirect_to root_path, notice: 'Order payment not found' if @order.nil?
+    redirect_to root_path, notice: 'Order payment not found' if @order.blank?
+  end
+
+  def set_payment
+    begin
+      @payment = PayPal::SDK::REST::Payment.find(params[:paymentId])
+    rescue
+      redirect_to root_path, notice: 'Payment not found'
+    end
   end
 
 end
