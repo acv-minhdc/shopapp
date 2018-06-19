@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Cart', type: :feature do
   let!(:products) { create_list(:product, 2) }
-  let!(:user) { User.create(email: 'testuseracv@yopmail.com', password: 'password', password_confirmation: 'password') }
+  let!(:user) { User.create(email: 'testuseracv@yopmail.com', password: 'password', password_confirmation: 'password', firstname: 'minh', lastname: 'dao') }
 
   scenario 'save from session when sign up' do
     reset_session!
@@ -30,6 +30,7 @@ RSpec.feature 'Cart', type: :feature do
     # when login
     visit products_url
     click_on 'Add to Cart', match: :first
+    click_on ['Hi',user.firstname].join(' ')
     click_on 'Logout'
 
     # when no login
