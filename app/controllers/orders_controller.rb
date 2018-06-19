@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   include OrdersHelper
+  include CartHelper
 
   before_action :set_order, only: [:execute_payment, :show]
   before_action :authenticate_user!, only: [:index, :show]
