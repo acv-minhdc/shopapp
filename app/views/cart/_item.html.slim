@@ -11,9 +11,9 @@ tr
       = product.name.capitalize
   td
     = form_tag(controller: 'cart', action: 'change_quantity')
-      = number_field_tag :quantity, quantity, min: 1, step: 1
+      = number_field_tag :quantity, quantity, min: 1, step: 1, style: "width: 50px"
       = hidden_field_tag :id, product.id
-      = submit_tag 'Apply'
+      = submit_tag 'Apply', class: 'btn btn-info btn-sm'
   td = '$' + subprice.to_s
   td
     = link_to cart_delete_path(product.id), method: :delete, data: { confirm: 'Are you sure?' } do

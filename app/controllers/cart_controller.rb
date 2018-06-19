@@ -33,11 +33,12 @@ class CartController < ApplicationController
   end
 
   def change_quantity
-    if params[:quantity].nil? || params[:quantity].to_i < 1
-      flash[:warning] = 'Quantity cant\'t be empty or less than 1'
+    if params[:quantity].blank? || params[:quantity].to_i < 1
+      flash[:warning] = 'Quantity cant\'t be blank'
       # return redirect_back fallback_location: product_path(params[:id])
+    else
+      session[:cart][params[:id]] = params[:quantity].to_i
     end
-    session[:cart][params[:id]] = params[:quantity].to_i
     redirect_to cart_index_path
   end
 
