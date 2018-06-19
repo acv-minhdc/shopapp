@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  include CartHelper
   # before_action :configure_sign_in_params, only: [:create]
   # after_action :merge_cart, only: [:new]
   # after_action :save_session_cart, only: [:create]

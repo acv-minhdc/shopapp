@@ -1,4 +1,6 @@
 class CartController < ApplicationController
+  include CartHelper
+
   before_action :init_cart, except: [:empty]
   after_action :sync_cart, except: [:index, :checkout, :empty]
 
