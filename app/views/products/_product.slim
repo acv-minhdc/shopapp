@@ -12,8 +12,12 @@
           h5.name
             = link_to product do
               = product.name.capitalize
+            small
+              | Category: 
+              = link_to product.category.name, product.category
           p.price-container
-            span $#{product.price}
+            span
+              | $#{product.price}
           span.tag1
         .description
           p = product.description.truncate(50)

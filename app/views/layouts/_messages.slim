@@ -1,0 +1,23 @@
+- flash.each do |name, msgs|
+  - class_type = case name.to_sym
+  - when :alert, :danger, :error, :validation_errors
+    - 'alert-danger'
+  - when :warning, :todo
+    - 'alert-warning'
+  - when :notice, :success
+    - 'alert-success'
+  - else
+    - 'alert-info'
+
+  - if msgs.respond_to?(:each)
+
+      div class="alert #{class_type}"
+        a href="#" class="close" data-dismiss="alert" &#215
+        - msgs.each do |msg|
+          p = msg
+
+  - else
+
+    div class="alert #{class_type}"
+      a href="#" class="close" data-dismiss="alert" &#215
+      = msgs

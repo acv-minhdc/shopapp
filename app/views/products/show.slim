@@ -1,0 +1,25 @@
+p#notice
+  = notice
+.container
+  .col-md-5
+    - if !@product.image_url.blank?
+      = image_tag @product.image_url, size: "400"
+  .col-md-7
+    p
+      strong
+        | Name:
+      = @product.name
+    p
+      strong
+        | Description:
+      = @product.description
+    p
+      strong
+        | Price:
+      | $
+      = @product.price
+    = form_tag(controller: 'cart', action: 'add') do
+      = label_tag :quantity
+      = number_field_tag :quantity, 1, min: 1, step: 1
+      = submit_tag 'Add to cart', class: 'btn btn-info btn-md'
+    = link_to 'Back', products_path, class: 'btn btn-warning btn-sm'

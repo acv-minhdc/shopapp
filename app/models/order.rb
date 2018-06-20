@@ -5,9 +5,9 @@ class Order < ApplicationRecord
 
   def get_info_user
     return if user.blank?
-    self.name = [user.firstname, user.lastname].join(' ')
-    self.phone_number = user.phone_number
-    self.shipping_address = user.address
+    self.name = name || [user.firstname, user.lastname].join(' ')
+    self.phone_number = phone_number || user.phone_number
+    self.shipping_address = shipping_address || user.address
   end
 
   self.per_page = 10

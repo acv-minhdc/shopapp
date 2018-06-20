@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.published.paginate(page: params[:page]).order(id: :desc)
+    @products = Product.published.includes(:category).paginate(page: params[:page]).order(id: :desc)
   end
 
 
@@ -21,5 +21,4 @@ class ProductsController < ApplicationController
   def set_product
     @product = Product.find(params[:id])
   end
-
 end

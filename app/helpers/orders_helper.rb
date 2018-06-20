@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 module OrdersHelper
-  # include PayPal::SDK::REST
 
   def create_request_payment(items, return_url, cancel_url)
     items_list = []

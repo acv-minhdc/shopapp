@@ -6,6 +6,10 @@ h1.text-center Your detail order
   p Shipping address: #{@order.shipping_address}
   p Total amount: $#{@order.total_amount}
   p Execute Paymemt: #{@order.pay_status}
+  p State Paypal Server Check: #{@payment.state}
+  - if @payment.state == 'created' 
+    p But not pay yet
+    = link_to 'PayPal Checkout Again', @payment.links[2].href, class: 'btn btn-info'
   br
 table.table
   tr

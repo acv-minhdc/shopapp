@@ -2,8 +2,7 @@
   h2.text-center
     | Products listing
   .container
-    .well.well-sm
-      .btn-group
-        = will_paginate @products
+    .paging
+      = will_paginate @products
 
     = render partial: 'product', collection: @products
