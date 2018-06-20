@@ -18,8 +18,7 @@ class OrdersController < ApplicationController
 
   def checkout
     item_list = get_items_cart
-    @payment = create_request_payment(item_list,
-                                      execute_payment_orders_url, root_url)
+    @payment = create_request_payment(item_list, execute_payment_orders_url, root_url)
     # Request to paypal
     if @payment.create
       @order = Order.new(order_params.merge(user_id: current_user.try(:id),
