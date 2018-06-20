@@ -11,10 +11,10 @@
 
   - if msgs.respond_to?(:each)
 
-    - msgs.each do |msg|
       div class="alert #{class_type}"
         a href="#" class="close" data-dismiss="alert" &#215
-        = msg
+        - msgs.each do |msg|
+          p = msg
 
   - else
 
