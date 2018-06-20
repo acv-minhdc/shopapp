@@ -2,27 +2,30 @@ class OrdersController < ApplicationController
   include OrdersHelper
   include CartHelper
 
-  before_action :set_order, :set_payment, only: [:execute_payment, :show]
-  before_action :authenticate_user!, only: [:index, :show]
+  before_action :set_order, :set_payment, only: %i[execute_payment show]
+  before_action :authenticate_user!, only: %i[index show]
+  before_action :check_cart, only: %i[new checkout]
 
   def index
-    @orders = Order.where(user: current_user).paginate(page: params[:page]).order(:created_at => :asc)
+    @orders = Order.where(user: current_user)\
+                   .paginate(page: params[:page]).order(created_at: :asc)
   end
 
   def new
     @order = Order.new(user: current_user)
-    return redirect_to cart_index_path, notice: 'Your cart is empty' if session[:cart].empty?
     @item_list = get_items_cart
   end
 
   def checkout
-    return redirect_to cart_index_path, notice: 'Your cart is empty' if session[:cart].empty?
     item_list = get_items_cart
-    @payment = create_request_payment(item_list, execute_payment_orders_url, root_url)
+    @payment = create_request_payment(item_list,
+                                      execute_payment_orders_url, root_url)
     # Request to paypal
     if @payment.create
-      @order = Order.new(order_params.merge(user_id: current_user.try(:id), items: JSON(convert_item_list_to_order_items(item_list)),
-                          total_amount: @total_price, payment_id: @payment.id))
+      @order = Order.new(order_params.merge(user_id: current_user.try(:id),
+                                            items: JSON(convert_item_list_to_order_items(item_list)),
+                                            total_amount: @total_price,
+                                            payment_id: @payment.id))
       if @order.save
         redirect_to @payment.links[1].href
       else
@@ -64,11 +67,14 @@ class OrdersController < ApplicationController
   end
 
   def set_payment
-    begin
-      @payment = PayPal::SDK::REST::Payment.find(params[:paymentId])
-    rescue
-      redirect_to root_path, notice: 'Payment not found'
-    end
+    @payment = PayPal::SDK::REST::Payment.find(params[:paymentId])
+  rescue StandardError
+    redirect_to root_path, notice: 'Payment not found'
   end
 
+  def check_cart
+    if session[:cart].empty?
+      redirect_to cart_index_path, notice: 'Your cart is empty'
+    end
+  end
 end

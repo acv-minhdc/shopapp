@@ -2,7 +2,7 @@ class CartController < ApplicationController
   include CartHelper
 
   before_action :init_cart, except: [:empty]
-  after_action :sync_cart, except: [:index, :checkout, :empty]
+  after_action :sync_cart, except: %i[index checkout empty]
 
   # Index
   def index
@@ -50,8 +50,7 @@ class CartController < ApplicationController
 
   private
 
-    def init_cart
-      session[:cart] ||= {}
-    end
-
+  def init_cart
+    session[:cart] ||= {}
+  end
 end

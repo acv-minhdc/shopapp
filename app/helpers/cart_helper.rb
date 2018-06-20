@@ -8,7 +8,7 @@ module CartHelper
       # Create quantity array
       @total_price = 0
       products.each do |a|
-        subprice_of_a_line = cart[a.id.to_s]*a.price
+        subprice_of_a_line = cart[a.id.to_s] * a.price
         @total_price += subprice_of_a_line
         item_list[a] = { 'quantity' => cart[a.id.to_s], 'subprice' => subprice_of_a_line }
       end
@@ -18,7 +18,7 @@ module CartHelper
 
   def merge_to_session_cart
     session[:cart] ||= {}
-    session[:cart].merge!(JSON.parse(current_user.cart.items)) { |key, oldval, newval| oldval + newval } if current_user.cart.items.present?
+    session[:cart].merge!(JSON.parse(current_user.cart.items)) { |_key, oldval, newval| oldval + newval } if current_user.cart.items.present?
     current_user.cart.items = JSON(session[:cart])
     current_user.cart.save!
   end
