@@ -31,6 +31,9 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'bootstrap-will_paginate', '0.0.10'
 # gem 'will_paginate-bootstrap4'
 
+# awesome font
+gem "font-awesome-rails"
+
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -71,6 +74,7 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem "factory_bot_rails", "~> 4.0"
   gem 'dotenv-rails'
+  gem "database_cleaner"
 end
 
 group :development do
@@ -83,6 +87,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'rspec-rails', '~> 3.7'
+  gem 'bullet'
 end
 
 group :test do
@@ -92,6 +97,7 @@ group :test do
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
   gem 'shoulda-matchers', '~> 3.1'
+  gem 'rails-controller-testing'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

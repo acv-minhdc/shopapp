@@ -1,6 +1,8 @@
 class CartController < ApplicationController
+  include CartHelper
+
   before_action :init_cart, except: [:empty]
-  after_action :sync_cart, except: [:index, :checkout]
+  after_action :sync_cart, except: [:index, :checkout, :empty]
 
   # Index
   def index
@@ -31,16 +33,17 @@ class CartController < ApplicationController
   end
 
   def change_quantity
-    if params[:quantity].nil? || params[:quantity].to_i < 1
-      flash[:warning] = 'Quantity cant\'t be empty or less than 1'
+    if params[:quantity].blank? || params[:quantity].to_i < 1
+      flash[:warning] = 'Quantity cant\'t be blank'
       # return redirect_back fallback_location: product_path(params[:id])
+    else
+      session[:cart][params[:id]] = params[:quantity].to_i
     end
-    session[:cart][params[:id]] = params[:quantity].to_i
     redirect_to cart_index_path
   end
 
   def empty
-    session[:cart] = {}
+    empty_cart
     flash[:success] = 'Empty done'
     redirect_to cart_index_path
   end
@@ -49,13 +52,6 @@ class CartController < ApplicationController
 
     def init_cart
       session[:cart] ||= {}
-    end
-
-    def sync_cart
-      if user_signed_in?
-        current_user.cart.items = JSON(session[:cart]) if session[:cart]
-        current_user.cart.save!
-      end
     end
 
 end

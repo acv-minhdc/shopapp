@@ -15,3 +15,8 @@ URL: **https://acvshop.herokuapp.com/**
 * [x] Page shipping info
 * [x] Check out (Paypal or google checkout)
 * [x] Detail order
+* [x] Admin pages: **https://acvshop.herokuapp.com/admin**
+* [ ] Rspec capybara test
+
+Account paypal buyer test: acvbuyer888@gmail.com/saobachkim
+Admin account: admin@example.com/password

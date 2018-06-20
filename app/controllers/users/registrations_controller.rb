@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  include CartHelper
+  
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
   # after_action :merge_cart, only: [:create]
@@ -53,8 +55,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up.
   def after_sign_up_path_for(resource)
-
-    Cart.create(items: '{}', user_id: current_user.id)
     merge_to_session_cart
     super(resource)
   end

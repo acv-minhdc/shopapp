@@ -1,20 +1,22 @@
-h2.text-center Your Cart
-table.table
-  tr
-    th Product
-    th Name
-    th Quantity
-    th Price
-    th colspan='1'
-  = render partial: "item", collection: @items, as: :item
+.container
+  h2.text-center Your Cart
+  table.table
+    tr
+      th Product
+      th Name
+      th Quantity
+      th Price
+      th colspan='1'
+    = render partial: "item", collection: @items, as: :item
 
-.text-center
-  h3
-    strong = 'Total: $' + @total_price.to_s
+  .text-center
+    h3
+      strong = 'Total: $' + @total_price.to_s
 
-br
+  br
 
-.text-center
-  = link_to 'Empty Cart', empty_cart_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning btn-lg btn-space'
-  = link_to 'Next', new_order_path, class: 'btn btn-success btn-lg btn-space' 
-hr
+  .text-center
+    = link_to 'Back', :back, class: 'btn btn-info btn-lg btn-space'
+    = link_to 'Empty Cart', empty_cart_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning btn-lg btn-space'
+    = link_to 'Next', new_order_path, class: 'btn btn-success btn-lg btn-space'
+  hr

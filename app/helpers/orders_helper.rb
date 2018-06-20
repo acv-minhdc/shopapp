@@ -44,7 +44,7 @@ module OrdersHelper
     h
   end
 
-  def get_items_order(items)
+  def get_items(items)
     items = JSON.parse(items)
     products = Product.find(items.keys.map(&:to_s))
     items_order = {}
