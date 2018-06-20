@@ -2,9 +2,8 @@ class OrdersController < ApplicationController
   include OrdersHelper
   include CartHelper
 
-  before_action :set_order, only: [:execute_payment, :show]
+  before_action :set_order, :set_payment, only: [:execute_payment, :show]
   before_action :authenticate_user!, only: [:index, :show]
-  before_action :set_payment, only: [:execute_payment]
 
   def index
     @orders = Order.where(user: current_user).paginate(page: params[:page]).order(:created_at => :asc)
@@ -27,10 +26,11 @@ class OrdersController < ApplicationController
       if @order.save
         redirect_to @payment.links[1].href
       else
-        redirect_to root_url, notice: 'Can\'t leave shipping info blank'
+        flash[:error] = @order.errors.full_messages
+        redirect_back fallback_location: root_path
       end
     else
-      redirect_to root_url, notice: @payment.error
+      redirect_to root_url, error: @payment.error
     end
   end
 

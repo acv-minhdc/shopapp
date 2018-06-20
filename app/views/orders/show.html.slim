@@ -6,6 +6,7 @@ h1.text-center Your detail order
   p Shipping address: #{@order.shipping_address}
   p Total amount: $#{@order.total_amount}
   p Execute Paymemt: #{@order.pay_status}
+  p State Paypal Server Check: #{@payment.state}
   br
 table.table
   tr
