@@ -16,15 +16,17 @@ nav.navbar.navbar-default
           = link_to 'Categories', categories_path
       ul.nav.navbar-nav.navbar-right
         li
-          = link_to cart_index_path, class: 'btn btn-lg' do
-            span.glyphicon.glyphicon-shopping-cart
+            = link_to cart_index_path, class: 'btn btn-lg' do
+              span.glyphicon.glyphicon-shopping-cart style="color:blue;"
+              span.badge.badge-notify style='top:-10px;left:-5px;background:red;'
+                = count_cart
         - if !user_signed_in?
           li
             = link_to 'Login', new_user_session_path
         - else
           li.dropdown
             a.dropdown-toggle[href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"]
-              | Hi 
+              = 'Hi '
               = current_user.firstname
               span.caret
             ul.dropdown-menu
