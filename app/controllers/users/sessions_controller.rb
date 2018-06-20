@@ -32,5 +32,4 @@ class Users::SessionsController < Devise::SessionsController
     merge_to_session_cart
     super(resource)
   end
-
 end
