@@ -12,11 +12,9 @@ class CartController < ApplicationController
   # Add product with quantity
   def add
     quantity = params[:quantity].try(:to_i) || 1
-    if quantity < 1
-      flash[:warning] = 'Quantity cant\'t be less than 1'
-      return redirect_back fallback_location: product_path(params[:id])
+    if !add_item(params[:id], quantity)
+      flash[:warning] = 'Invalid input'
     end
-    add_item(params[:id], quantity)
     redirect_to cart_index_path
   end
 

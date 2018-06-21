@@ -36,10 +36,12 @@ module CartHelper
   end
 
   def add_item(id, quantity = 1)
+    return false if quantity < 1 || id.blank? || Product.find_by(id: id).blank?
     if  session[:cart][id.to_s].present?
       session[:cart][id.to_s] += quantity
     else
       session[:cart][id.to_s] = quantity
     end
+    true
   end
 end
