@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 2018_06_21_020405) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image_url"
-    t.text "color", default: [], array: true
+    t.text "colors", default: [], array: true
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
