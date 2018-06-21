@@ -44,7 +44,12 @@ random = Random.new
     else
       c = Category.find_by(name: category)
     end
-    Product.create!(name: product['name'], description: product['description'], category: c, price: product['price'], image_url: product['images'].try(:first))
+    Product.create!(name: product['name'],
+                    description: product['description'],
+                    category: c,
+                    price: product['price'],
+                    image_url: product['images'].try(:first),
+                    colors: product['colors'])
   end
   random.rand(1..5).times { output = webhoseio.get_next() }
 end
