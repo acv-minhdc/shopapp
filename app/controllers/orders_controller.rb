@@ -29,7 +29,7 @@ class OrdersController < ApplicationController
         redirect_to @payment.links[1].href
       else
         flash[:error] = @order.errors.full_messages
-        redirect_back fallback_location: root_path
+        render :new
       end
     else
       redirect_to root_url, error: @payment.error
@@ -72,7 +72,7 @@ class OrdersController < ApplicationController
   end
 
   def check_cart
-    if session[:cart].empty?
+    if session[:cart].blank?
       redirect_to cart_index_path, notice: 'Your cart is empty'
     end
   end
