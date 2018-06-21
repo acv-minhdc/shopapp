@@ -10,6 +10,6 @@ require 'rails_helper'
 #     end
 #   end
 # end
-RSpec.describe ProductsHelper, type: :helper do
-  
+RSpec.describe CartHelper, type: :helper do
+
 end

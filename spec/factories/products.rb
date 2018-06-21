@@ -3,6 +3,7 @@ FactoryBot.define do
     name { random_name }
     description { random_name }
     price "9.99"
+    category { create(:category) }
   end
 end
 

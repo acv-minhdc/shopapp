@@ -16,12 +16,7 @@ class CartController < ApplicationController
       flash[:warning] = 'Quantity cant\'t be less than 1'
       return redirect_back fallback_location: product_path(params[:id])
     end
-    # If exists, add new, else create new variable
-    if  session[:cart][params[:id]].present?
-      session[:cart][params[:id]] += quantity
-    else
-      session[:cart][params[:id]] = quantity
-    end
+    add_item(params[:id], quantity)
     redirect_to cart_index_path
   end
 

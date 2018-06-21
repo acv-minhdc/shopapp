@@ -34,4 +34,12 @@ module CartHelper
       current_user.cart.save!
     end
   end
+
+  def add_item(id, quantity = 1)
+    if  session[:cart][id.to_s].present?
+      session[:cart][id.to_s] += quantity
+    else
+      session[:cart][id.to_s] = quantity
+    end
+  end
 end
