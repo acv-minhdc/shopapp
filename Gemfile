@@ -14,8 +14,11 @@ gem 'country_select'
 
 gem 'slim-rails'
 
-# admin pages
+# Admin pages
 gem 'rails_admin'
+
+# Validate + sanitize phone number
+gem 'phony_rails'
 
 # Get products list by webhoseio
 gem 'webhoseio-ruby'

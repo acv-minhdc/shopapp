@@ -11,8 +11,8 @@
 
   div class="alert #{class_type}"
     a href="#" class="close" data-dismiss="alert" &#215
-      - if msgs.respond_to?(:each)
-        - msgs.each do |msg|
-          p = msg
-      - else
-          = msgs
+    - if msgs.respond_to?(:each)
+      - msgs.each do |msg|
+        p = msg
+    - else
+        = msgs
