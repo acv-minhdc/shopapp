@@ -4,6 +4,7 @@ class Order < ApplicationRecord
   validates :phone_number, phony_plausible: true
   belongs_to :user, optional: true
   after_initialize :get_info_user
+  before_save
 
   def get_info_user
     return if user.blank?
@@ -12,9 +13,19 @@ class Order < ApplicationRecord
     self.shipping_address = shipping_address || user.address
   end
 
-  def pay
+  def pay!
     self.pay_status = true
     save
+  end
+
+  def get_items
+    items = JSON.parse(self.items)
+    products = Product.find(items.keys)
+    items_order = {}
+    products.each do |product|
+      items_order[product] = items[product.id.to_s]
+    end
+    items_order
   end
 
   self.per_page = 10
