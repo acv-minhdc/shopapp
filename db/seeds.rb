@@ -34,23 +34,23 @@ query_params = {
 output = webhoseio.query('productFilter', query_params)
 
 # Save to database
-random = Random.new
 10.times do
-  output['products'].each do |product|
-    category = product['categories'].sample
-    c = Category.new(name: category)
-    if c.valid?
-      c.save!
+  output['products'].each_with_index do |product, index|
+    next if index % 3 != 0 # Avoid duplicate product
+    random_category = product['categories'].sample
+    category = Category.new(name: random_category)
+    if category.valid?
+      category.save!
     else
-      c = Category.find_by(name: category)
+      category = Category.find_by(name: random_category)
     end
     Product.create!(name: product['name'],
                     description: product['description'],
-                    category: c,
+                    category: category,
                     price: product['price'],
                     image_url: product['images'].try(:first),
                     colors: product['colors'])
   end
-  random.rand(1..5).times { output = webhoseio.get_next() }
+  output = webhoseio.get_next()
 end
 Admin.create!(email: 'admin@example.com', password: 'password')

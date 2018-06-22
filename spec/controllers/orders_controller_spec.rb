@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.configure do |c|
-  c.include CartHelper
-  c.include OrdersHelper
+RSpec.configure do |config|
+  config.include CartHelper
+  config.include OrdersHelper
 end
 
 RSpec.describe OrdersController, type: :controller do
@@ -10,13 +10,12 @@ RSpec.describe OrdersController, type: :controller do
 
   before(:each) do
     session[:cart] ||= {}
-    add_item(products.first.id, 1)
-    add_item(products.second.id, 2)
+    add_item?(products.first.id, 1)
+    add_item?(products.second.id, 2)
   end
 
   describe 'make a new order' do
     it 'render a shipping page without empty cart' do
-
       get :new
       expect(response).to render_template :new
     end
@@ -25,10 +24,8 @@ RSpec.describe OrdersController, type: :controller do
       session[:cart] = nil
       get :new
       expect(response).to redirect_to cart_index_path
-      expect(assigns(:flash).present?).to_not eq true
+      expect(flash[:warning]).to match(/Your cart is empty/)
     end
-
-
   end
 
   describe 'create order' do
@@ -51,7 +48,9 @@ RSpec.describe OrdersController, type: :controller do
                                          shipping_address: '' } }
 
       expect(response).to render_template :new
-      expect(controller).to set_flash[:error]
+      expect(flash[:error]).to include("Name can't be blank")
+      expect(flash[:error]).to include("Phone number can't be blank")
+      expect(flash[:error]).to include("Shipping address can't be blank")
     end
   end
 end

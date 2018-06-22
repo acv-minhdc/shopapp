@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe CategoriesController, type: :controller do
-
   let!(:category) { create(:category) }
   let!(:products1) { create_list(:product, 4, category: category) }
 
@@ -18,5 +17,4 @@ RSpec.describe CategoriesController, type: :controller do
       expect(assigns(:products).count).to eq category.products.count
     end
   end
-
 end

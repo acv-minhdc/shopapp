@@ -43,8 +43,7 @@ class OrdersController < ApplicationController
   def execute_payment
     if @payment.execute(payer_id: params[:PayerID])
       flash.now[:success] = 'Execute payment successfully'
-      @order.pay_status = true
-      @order.save!
+      @order.pay
       @items = get_items(@order.items)
       empty_cart
       render 'show'
@@ -73,7 +72,8 @@ class OrdersController < ApplicationController
 
   def check_cart
     if session[:cart].blank?
-      redirect_to cart_index_path, notice: 'Your cart is empty'
+      flash[:warning] = 'Your cart is empty'
+      redirect_to cart_index_path
     end
   end
 end

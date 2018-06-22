@@ -4,7 +4,7 @@ module CartHelper
     item_list = {}
     if cart.present?
       # Get products from DB
-      products = Product.find(cart.keys.map(&:to_s))
+      products = Product.find(cart.keys)
       # Create quantity array
       @total_price = 0
       products.each do |a|
@@ -35,8 +35,8 @@ module CartHelper
     end
   end
 
-  def add_item(id, quantity = 1)
-    return false if quantity < 1 || id.blank? || Product.find_by(id: id).blank?
+  def add_item?(id, quantity = 1)
+    return false if quantity < 1 || Product.find_by(id: id).blank?
     if  session[:cart][id.to_s].present?
       session[:cart][id.to_s] += quantity
     else

@@ -9,7 +9,7 @@ class Cart < ApplicationRecord
     end
     _items = JSON.parse(items)
     begin
-      Product.find(_items.keys.map(&:to_s))
+      Product.find(_items.keys)
     rescue
       errors.add(:productids, 'invalid')
       throw(:abort)

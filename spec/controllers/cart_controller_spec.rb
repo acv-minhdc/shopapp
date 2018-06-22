@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.configure do |c|
-  c.include CartHelper
+RSpec.configure do |config|
+  config.include CartHelper
 end
 
 RSpec.describe CartController, type: :controller do
@@ -9,15 +9,14 @@ RSpec.describe CartController, type: :controller do
 
   before(:each) do
     session[:cart] ||= {}
-    add_item(products.first.id, 1)
-    add_item(products.second.id, 2)
+    add_item?(products.first.id, 1)
+    add_item?(products.second.id, 2)
   end
 
   describe 'get cart index' do
     it 'success' do
       get :index
-      expect(assigns(:items).keys.first).to eq products.first
-      expect(assigns(:items).keys.second).to eq products.second
+      expect(assigns(:items).keys.size).to eq products.size
     end
   end
 
@@ -35,13 +34,13 @@ RSpec.describe CartController, type: :controller do
     end
 
     it 'alert whern post with invalid quantity' do
-      post :add, params: { id: products.first.id, quantity: -1}
-      expect(controller).to set_flash[:warning]
+      post :add, params: { id: products.first.id, quantity: -1 }
+      expect(flash[:warning]).to match(/Invalid input/)
     end
 
     it 'alert whern post with invalid product id' do
-      post :add, params: { id: -5, quantity: -1}
-      expect(controller).to set_flash[:warning]
+      post :add, params: { id: -5, quantity: -1 }
+      expect(flash[:warning]).to match(/Invalid input/)
     end
   end
 
@@ -52,14 +51,14 @@ RSpec.describe CartController, type: :controller do
     end
 
     it 'alert warning when post blank' do
-      post :change_quantity, params: { id: products.first.id, quantity: ''}
-      expect(controller).to set_flash[:warning]
+      post :change_quantity, params: { id: products.first.id, quantity: '' }
+      expect(flash[:warning]).to match(/Quantity invalid/)
       expect(response).to redirect_to cart_index_path
     end
 
     it 'alert warning when post negative number' do
-      post :change_quantity, params: { id: products.first.id, quantity: -2}
-      expect(controller).to set_flash[:warning]
+      post :change_quantity, params: { id: products.first.id, quantity: -2 }
+      expect(flash[:warning]).to match(/Quantity invalid/)
       expect(response).to redirect_to cart_index_path
     end
   end

@@ -46,7 +46,7 @@ module OrdersHelper
 
   def get_items(items)
     items = JSON.parse(items)
-    products = Product.find(items.keys.map(&:to_s))
+    products = Product.find(items.keys)
     items_order = {}
     products.each do |product|
       items_order[product] = items[product.id.to_s]

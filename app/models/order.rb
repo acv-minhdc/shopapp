@@ -10,5 +10,10 @@ class Order < ApplicationRecord
     self.shipping_address = shipping_address || user.address
   end
 
+  def pay
+    self.pay_status = true
+    save
+  end
+
   self.per_page = 10
 end

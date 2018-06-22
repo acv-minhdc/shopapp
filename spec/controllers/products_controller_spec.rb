@@ -24,21 +24,18 @@ require 'rails_helper'
 # `rails-controller-testing` gem.
 
 RSpec.describe ProductsController, type: :controller do
+  let!(:products) { create_list(:product, 3) }
 
-let!(:products) { create_list(:product, 3) }
-
-  describe "GET #index" do
+  describe 'GET #index' do
     it 'get list products' do
       get 'index'
       expect(assigns(:products).count).to eq products.count
     end
   end
-  #
-  describe "GET #show" do
+  describe 'GET #show' do
     it 'show first product' do
       get 'show', params: { id: products.first.id }
       expect(assigns(:product).eql?(products.first)).to eq true
     end
   end
-
 end

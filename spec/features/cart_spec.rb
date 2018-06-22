@@ -30,7 +30,7 @@ RSpec.feature 'Cart', type: :feature do
     # when login
     visit products_url
     click_on 'Add to Cart', match: :first
-    click_on ['Hi',user.firstname].join(' ')
+    click_on ['Hi', user.firstname].join(' ')
     click_on 'Logout'
 
     # when no login
@@ -80,6 +80,4 @@ RSpec.feature 'Cart', type: :feature do
       expect(page).to have_field(name: 'quantity', with: '11')
     end
   end
-
-
 end
