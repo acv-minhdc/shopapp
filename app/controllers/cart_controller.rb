@@ -12,7 +12,8 @@ class CartController < ApplicationController
   # Add product with quantity
   def add
     quantity = params[:quantity].try(:to_i) || 1
-    if !add_item?(params[:id], quantity)
+    product_attr = { 'color' => params[:color], 'size' => params[:size]} if params[:color].present? && params[:size].present?
+    if !add_item?(params[:id], quantity, product_attr.to_s)
       flash[:warning] = 'Invalid input'
     end
     redirect_to cart_index_path

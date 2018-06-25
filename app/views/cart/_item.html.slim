@@ -1,6 +1,4 @@
 - product = item[0]
-- quantity = item[1]['quantity']
-- subprice = item[1]['subprice']
 tr
   td
     - if !product.image_url.blank?
@@ -10,11 +8,16 @@ tr
     = link_to product do
       = product.name.capitalize
   td
-    = form_tag(controller: 'cart', action: 'change_quantity')
-      = number_field_tag :quantity, quantity, min: 1, step: 1, style: "width: 50px"
-      = hidden_field_tag :id, product.id
-      = submit_tag 'Apply', class: 'btn btn-info btn-sm'
-  td = '$' + subprice.to_s
-  td
-    = link_to cart_delete_path(product.id), method: :delete, data: { confirm: 'Are you sure?' } do
-      span.glyphicon.glyphicon-remove
+    - item[1].each do |product_attr, hash|
+      .row
+        - product_attr = eval(product_attr)
+        = 'Color: ' + product_attr['color'] + '| Size: ' + product_attr['size'] + ' '
+        = form_tag(controller: 'cart', action: 'change_quantity')
+          = number_field_tag :quantity, hash['quantity'], min: 1, step: 1, style: "width: 50px"
+          = hidden_field_tag :id, product.id
+          = hidden_field_tag :color, product_attr['color']
+          = hidden_field_tag :size, product_attr['size']
+          = submit_tag 'Apply', class: 'btn btn-info btn-sm'
+        = '$' + hash['subprice'].to_s
+        = link_to cart_delete_path(product.id), method: :delete, data: { confirm: 'Are you sure?' } do
+          span.glyphicon.glyphicon-remove

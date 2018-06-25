@@ -8,9 +8,12 @@ module CartHelper
       # Create quantity array
       @total_price = 0
       products.each do |a|
-        subprice_of_a_line = cart[a.id.to_s] * a.price
-        @total_price += subprice_of_a_line
-        item_list[a] = { 'quantity' => cart[a.id.to_s], 'subprice' => subprice_of_a_line }
+        item_list[a] = {}
+        cart[a.id.to_s].each do |product_attr, quantity|
+          subprice_of_a_line = quantity * a.price
+          @total_price += subprice_of_a_line
+          item_list[a][product_attr] = { 'quantity' => quantity, 'subprice' => subprice_of_a_line }
+        end
       end
     end
     item_list
@@ -35,12 +38,16 @@ module CartHelper
     end
   end
 
-  def add_item?(id, quantity = 1)
-    return false if quantity < 1 || Product.find_by(id: id).blank?
-    if  session[:cart][id.to_s].present?
-      session[:cart][id.to_s] += quantity
+  def add_item?(id, quantity = 1, product_attr = nil)
+    product = Product.find_by(id: id)
+    return false if quantity < 1 || product.blank?
+    product_attr = { 'color' => product.colors.first, 'size' => 'M' }.to_s if product_attr.blank?
+    if  session[:cart][id.to_s].present? && session[:cart][id.to_s][product_attr].present?
+      session[:cart][id.to_s][product_attr] += quantity
+    elsif session[:cart][id.to_s].present?
+      session[:cart][id.to_s][product_attr] = quantity
     else
-      session[:cart][id.to_s] = quantity
+      session[:cart][id.to_s] = { product_attr => quantity }
     end
     true
   end

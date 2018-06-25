@@ -24,6 +24,10 @@ p#notice
           .form-groups
             = label_tag :color
             = select_tag :color, options_for_select(@product.colors), class: 'form-control'
+        - if @product.sizes.present?
+          .form-groups
+            = label_tag :size
+            = select_tag :size, options_for_select(@product.sizes), class: 'form-control'
 
         .form-groups
           = label_tag :quantity

@@ -34,6 +34,8 @@ query_params = {
 output = webhoseio.query('productFilter', query_params)
 
 # Save to database
+colors = ['while', 'black', 'blue', 'yeallow', 'pink', 'red', 'green', 'purple', 'gray', 'orange']
+sizes = ['S', 'M', 'L']
 10.times do
   output['products'].each_with_index do |product, index|
     next if index % 3 != 0 # Avoid duplicate product
@@ -49,7 +51,8 @@ output = webhoseio.query('productFilter', query_params)
                     category: category,
                     price: product['price'],
                     image_url: product['images'].try(:first),
-                    colors: product['colors'])
+                    colors: colors.sample(3),
+                    sizes: sizes)
   end
   output = webhoseio.get_next()
 end
