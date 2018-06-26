@@ -17,6 +17,6 @@ class Product < ApplicationRecord
     self.name.downcase!
   end
 
-  self.per_page = 9
+  self.per_page = 10
 
 end
