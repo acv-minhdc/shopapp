@@ -31,7 +31,8 @@ class OrdersController < ApplicationController
         render :new
       end
     else
-      redirect_to root_url, error: @payment.error
+      flash[:error] = @payment.error
+      redirect_to root_url
     end
   end
 
