@@ -1,7 +1,6 @@
 class Order < ApplicationRecord
   validates :name, :phone_number, :shipping_address, :payment_id, presence: true
   phony_normalize :phone_number, default_country_code: 'VN'
-  validates :phone_number, phony_plausible: { ignore_record_country_code: true, ignore_record_country_number: true }
   validates_plausible_phone :phone_number, presence: true, with: /\A\+\d+/
   belongs_to :user, optional: true
   after_initialize :get_info_user
