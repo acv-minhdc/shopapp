@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
-
   context 'Validation' do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:phone_number) }
@@ -12,5 +11,4 @@ RSpec.describe Order, type: :model do
   context 'Association' do
     it { should belong_to(:user) }
   end
-
 end
