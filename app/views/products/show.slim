@@ -18,8 +18,15 @@ p#notice
         | Price:
       | $
       = @product.price
-    = form_tag(controller: 'cart', action: 'add') do
-      = label_tag :quantity
-      = number_field_tag :quantity, 1, min: 1, step: 1
-      = submit_tag 'Add to cart', class: 'btn btn-info btn-md'
-    = link_to 'Back', products_path, class: 'btn btn-warning btn-sm'
+    .col-md-4
+      = form_tag(controller: 'cart', action: 'add') do
+        - if @product.colors.present?
+          .form-groups
+            = label_tag :color
+            = select_tag :color, options_for_select(@product.colors), class: 'form-control'
+
+        .form-groups
+          = label_tag :quantity
+          = number_field_tag :quantity, 1, min: 1, step: 1, class: 'form-control'
+
+        = submit_tag 'Add to cart', class: 'btn btn-info btn-md'

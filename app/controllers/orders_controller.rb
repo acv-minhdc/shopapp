@@ -2,13 +2,12 @@ class OrdersController < ApplicationController
   include OrdersHelper
   include CartHelper
 
-  before_action :set_order, :set_payment, only: %i[execute_payment show]
   before_action :authenticate_user!, only: %i[index show]
+  before_action :set_order, :set_payment, only: %i[execute_payment show]
   before_action :check_cart, only: %i[new checkout]
 
   def index
-    @orders = Order.where(user: current_user)\
-                   .paginate(page: params[:page]).order(created_at: :asc)
+    @orders = current_user.orders.paginate(page: params[:page]).order(:created_at => :asc)
   end
 
   def new
@@ -29,7 +28,7 @@ class OrdersController < ApplicationController
         redirect_to @payment.links[1].href
       else
         flash[:error] = @order.errors.full_messages
-        redirect_back fallback_location: root_path
+        render :new
       end
     else
       redirect_to root_url, error: @payment.error
@@ -37,15 +36,14 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @items = get_items(@order.items)
+    @items = @order.get_items
   end
 
   def execute_payment
     if @payment.execute(payer_id: params[:PayerID])
       flash.now[:success] = 'Execute payment successfully'
-      @order.pay_status = true
-      @order.save!
-      @items = get_items(@order.items)
+      @order.pay!
+      @items = @order.get_items
       empty_cart
       render 'show'
     else
@@ -72,8 +70,9 @@ class OrdersController < ApplicationController
   end
 
   def check_cart
-    if session[:cart].empty?
-      redirect_to cart_index_path, notice: 'Your cart is empty'
+    if session[:cart].blank?
+      flash[:warning] = 'Your cart is empty'
+      redirect_to cart_index_path
     end
   end
 end

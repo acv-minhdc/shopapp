@@ -12,15 +12,8 @@ class CartController < ApplicationController
   # Add product with quantity
   def add
     quantity = params[:quantity].try(:to_i) || 1
-    if quantity < 1
-      flash[:warning] = 'Quantity cant\'t be less than 1'
-      return redirect_back fallback_location: product_path(params[:id])
-    end
-    # If exists, add new, else create new variable
-    if  session[:cart][params[:id]].present?
-      session[:cart][params[:id]] += quantity
-    else
-      session[:cart][params[:id]] = quantity
+    if !add_item?(params[:id], quantity)
+      flash[:warning] = 'Invalid input'
     end
     redirect_to cart_index_path
   end
@@ -34,7 +27,7 @@ class CartController < ApplicationController
 
   def change_quantity
     if params[:quantity].blank? || params[:quantity].to_i < 1
-      flash[:warning] = 'Quantity cant\'t be blank'
+      flash[:warning] = 'Quantity invalid'
       # return redirect_back fallback_location: product_path(params[:id])
     else
       session[:cart][params[:id]] = params[:quantity].to_i
