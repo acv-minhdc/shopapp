@@ -20,10 +20,6 @@ p#notice
       = @product.price
     .col-md-4
       = form_tag(controller: 'cart', action: 'add') do
-        - if @product.colors.present?
-          .form-groups
-            = label_tag :color
-            = select_tag :color, options_for_select(@product.colors), class: 'form-control'
 
         .form-groups
           = label_tag :quantity
