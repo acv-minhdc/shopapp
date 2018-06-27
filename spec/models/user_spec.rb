@@ -25,7 +25,6 @@ RSpec.describe User, type: :model do
     it { should validate_presence_of(:password) }
 
     describe 'Phone number' do
-
       it 'can\'t save with blank phone_number' do
         user.phone_number = ''
         expect(user.save).to eq false
